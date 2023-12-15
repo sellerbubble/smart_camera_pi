@@ -4,7 +4,8 @@ import numpy as np
 import cv2
 import logging
 
-from .model import Net
+
+from deep_sort.deep_sort.deep.model import Net
 
 class Extractor(object):
     def __init__(self, model_path, use_cuda=True):
@@ -48,7 +49,7 @@ class Extractor(object):
 
 
 if __name__ == '__main__':
-    img = cv2.imread("demo.jpg")[:,:,(2,1,0)]
+    img = cv2.imread("C:\\Users\\23686\\Desktop\\yolov5old\\Yolov5-deepsort-inference\\R.jpg")[:,:,(2,1,0)]
     extr = Extractor("checkpoint/ckpt.t7")
     feature = extr(img)
     print(feature.shape)

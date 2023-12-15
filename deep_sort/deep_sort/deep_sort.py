@@ -24,12 +24,13 @@ class DeepSort(object):
         self.tracker = Tracker(metric, max_iou_distance=max_iou_distance, max_age=max_age, n_init=n_init)
 
     def update(self, bbox_xywh, confidences, ori_img):
+        #在这个方法中最重要的三个步骤：1、生成每个box的预测feature用于NMS 2、NMS 3、进行追踪算法并得到outputs返回
         self.height, self.width = ori_img.shape[:2]
         # generate detections
         features = self._get_features(bbox_xywh, ori_img)
         bbox_tlwh = self._xywh_to_tlwh(bbox_xywh)
         detections = [Detection(bbox_tlwh[i], conf, features[i]) for i,conf in enumerate(confidences) if conf>self.min_confidence]
-
+        #这里得到了经过NMS之后的检测框
         # run on non-maximum supression
         boxes = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
@@ -48,7 +49,7 @@ class DeepSort(object):
             box = track.to_tlwh()
             x1,y1,x2,y2 = self._tlwh_to_xyxy(box)
             track_id = track.track_id
-            outputs.append(np.array([x1,y1,x2,y2,track_id], dtype=np.int))
+            outputs.append(np.array([x1,y1,x2,y2,track_id], dtype=int))
         if len(outputs) > 0:
             outputs = np.stack(outputs,axis=0)
         return outputs
