@@ -5,14 +5,19 @@ import numpy as np
 
 
 class get_pic():
-    def __init__(self):
+    def __init__(self,t=0):
 
         self.footage_socket = None
-        self.open_tcp()
+        if t == 0:
+            self.open_tcp()
+        else :
+            self.open_tcp_for_action()
         self.window = 0
 
-
-
+    def open_tcp_for_action(self):
+        context = zmq.Context()
+        self.footage_socket = context.socket(zmq.PAIR)
+        self.footage_socket.bind('tcp://*:4000')
     def open_tcp(self):
         context = zmq.Context()
         self.footage_socket = context.socket(zmq.PAIR)

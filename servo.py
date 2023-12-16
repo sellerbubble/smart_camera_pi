@@ -2,7 +2,7 @@ from getpic import get_pic
 
 class servo():
     def __init__(self, outputs, shape):
-        self.message = get_pic()
+        self.message = get_pic(t=1)
         for value in list(outputs):
             x1, y1, x2, y2, track_id = value
         height = shape[0]
@@ -21,7 +21,7 @@ class servo():
     def turn(self, action):
         if action == 'right':
             print('1')
-            self.message.send_str(action)
+            self.message.footage_socket.send_string(action)
         if action == 'left':
             print(2)
-            self.message.send_str(action)
+            self.message.footage_socket.send_string(action)

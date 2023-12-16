@@ -46,9 +46,9 @@ def main():
         # videoWriter.write(result)
         cv2.imshow(name, result)
         cv2.waitKey(5)
-        pic.footage_socket.send_string('1')
-        #if len(outputs) == 1:
-        #    servo(outputs, shape)
+        #pic.footage_socket.send_string('1')
+        if len(outputs) == 1:
+           servo(outputs, shape)
         # if cv2.getWindowProperty(name, cv2.WND_PROP_AUTOSIZE) < 1:
         #     点x退出
             # break
